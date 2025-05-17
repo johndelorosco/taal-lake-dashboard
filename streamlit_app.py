@@ -255,7 +255,10 @@ elif selected == "Time Series":
 
         if time_col:
             df[time_col] = pd.to_datetime(df[time_col])
+
+            # Get numeric columns and exclude 'year' and 'month'
             numeric_cols = df.select_dtypes(include='number').columns.tolist()
+            numeric_cols = [col for col in numeric_cols if col.lower() not in ['year', 'month']]
 
             # Initialize session state
             if "time_series_selected_params" not in st.session_state:
@@ -269,7 +272,7 @@ elif selected == "Time Series":
             # Select All checkbox
             select_all = st.checkbox("Select All Parameters")
 
-            # If Select All is clicked, update session state once
+            # Handle Select All logic
             if select_all and not st.session_state.select_all_clicked:
                 st.session_state.time_series_selected_params = numeric_cols
                 st.session_state.select_all_clicked = True
@@ -277,17 +280,17 @@ elif selected == "Time Series":
                 st.session_state.time_series_selected_params = []
                 st.session_state.select_all_clicked = False
 
-            # Multiselect (will not override if you're selecting manually)
+            # Parameter multiselect
             selected_params = st.multiselect(
                 "Choose parameters:",
                 options=numeric_cols,
                 default=st.session_state.time_series_selected_params
             )
 
-            # Always sync selected parameters
+            # Sync selected parameters
             st.session_state.time_series_selected_params = selected_params
 
-            # Plotting
+            # Plot if parameters selected
             if selected_params:
                 fig = px.line(
                     df,

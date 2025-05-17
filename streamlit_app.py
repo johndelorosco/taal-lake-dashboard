@@ -617,7 +617,7 @@ This interactive dashboard helps visualize and analyze **Taal Lake's water quali
             "image": "dev4.jpg"
         },
         {
-            "name": "Carl louise Sembrano",
+            "name": "Carl Louise Sambrano",
             "role": "Frontend Developer",
             "desc": "Implemented the frontend components and visualizations.",
             "image": "dev5.jpg"
